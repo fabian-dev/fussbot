@@ -1,0 +1,21 @@
+{
+  "name": "fussbot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "engines": {
+    "node": "6.10",
+    "npm": "3.10"
+  },
+  "dependencies": {
+    "botkit": "^0.5.5",
+    "botkit-storage-redis": "^1.1.0",
+    "wordfilter": "^0.2.6"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
