@@ -1,4 +1,5 @@
 #!/bin/bash
 
 heroku config:set NPM_CONFIG_LOGLEVEL=debug
+heroku config:set NPM_CONFIG_PRODUCTION=false
 heroku config:set SLACK_API_TOKEN=<token here>
