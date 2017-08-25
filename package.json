@@ -4,7 +4,7 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js",
+    "start": "node dist/app.js",
     "build": "tsc",
     "postinstall": "npm run build"
   },

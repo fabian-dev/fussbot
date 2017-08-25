@@ -1,11 +1,5 @@
 declare namespace Botkit {
-    function botframeworkbot(configuration: BotFrameworkConfiguration): BotFrameworkController;
-    function consolebot(configuration: ConsoleConfiguration): ConsoleController;
-    function facebookbot(configuration: FacebookConfiguration): FacebookController;
     function slackbot(configuration: SlackConfiguration): SlackController;
-    function sparkbot(configuration: CiscoSparkConfiguration): CiscoSparkController;
-    function twilioipmbot(configuration: TwilioIPMConfiguration): TwilioIPMController;
-    function twiliosmsbot(configuration: TwilioSMSConfiguration): TwilioSMSController;
     interface Bot<S, M extends Message> {
         readonly botkit: Controller<S, M, this>;
         readonly identity: Identity;
@@ -18,57 +12,15 @@ declare namespace Botkit {
         reply(src: M, resp: string | M, cb?: (err: Error, res: any) => void): void;
         startConversation(message: M, cb: (err: Error, convo: Conversation<M>) => void): void;
     }
-    interface BotFrameworkBot extends Bot<BotFrameworkSpawnConfiguration, BotFrameworkMessage> {
-    }
-    interface BotFrameworkConfiguration extends Configuration {
-    }
-    interface BotFrameworkController extends Controller<BotFrameworkSpawnConfiguration, BotFrameworkMessage, BotFrameworkBot> {
-        createWebhookEndpoints(webserver: any, bot: TwilioSMSBot, cb?: () => void): this;
-    }
-    interface BotFrameworkMessage extends Message {
-    }
-    interface BotFrameworkSpawnConfiguration {
-        appId: string;
-        appPassword: string;
-    }
     interface Channel {
         id: string;
-    }
-    interface CiscoSparkBot extends Bot<CiscoSparkSpawnConfiguration, CiscoSparkMessage> {
-        retrieveFile(url: string, cb: (err: Error, body: any) => void): void;
-        retrieveFileInfo(url: string, cb: (err: Error, obj: any) => void): void;
-        startPrivateConversation(message: CiscoSparkMessage, cb: (err: Error, convo: Conversation<CiscoSparkMessage>) => void): void;
-        startPrivateConversationWithActor(message: CiscoSparkMessage, cb: (err: Error, convo: Conversation<CiscoSparkMessage>) => void): void;
-        startPrivateConversationWithPersonId(personId: string, cb: (err: Error, convo: Conversation<CiscoSparkMessage>) => void): void;
-    }
-    interface CiscoSparkConfiguration extends Configuration {
-        ciscospark_access_token: string;
-        limit_to_domain?: string | string[];
-        limit_to_org?: string;
-        public_address: string;
-        secret?: string;
-        webhook_name?: string;
-    }
-    interface CiscoSparkController extends Controller<CiscoSparkSpawnConfiguration, CiscoSparkMessage, CiscoSparkBot> {
-        createWebhookEndpoints(webserver: any, bot: CiscoSparkBot, cb?: () => void): this;
-    }
-    interface CiscoSparkMessage extends Message {
-        actorId?: string;
-        data?: {
-            personDisplayName: string;
-        };
-        files?: any[];
-        markdown?: string;
-        original_message?: CiscoSparkMessage;
-    }
-    interface CiscoSparkSpawnConfiguration {
     }
     interface Configuration {
         debug?: boolean;
         hostname?: string;
         json_file_store?: string;
         log?: boolean;
-        logger?: { log: Function; };
+        logger?: { log: () => void; };
         storage?: {
             users: Storage<User>;
             channels: Storage<Channel>;
@@ -76,21 +28,9 @@ declare namespace Botkit {
         };
         studio_token?: string;
     }
-    interface ConsoleBot extends Bot<ConsoleSpawnConfiguration, ConsoleMessage> {
-    }
-    interface ConsoleConfiguration extends Configuration {
-    }
-    interface ConsoleController extends Controller<ConsoleSpawnConfiguration, ConsoleMessage, ConsoleBot> {
-    }
-    interface ConsoleMessage extends Message {
-    }
-    interface ConsoleSpawnConfiguration {
-    }
     interface Controller<S, M extends Message, B extends Bot<S, M>> {
         readonly changeEars: HearsFunction<M>;
-        readonly log: {
-            (...params: any[]): void;
-        }
+        readonly log: (...params: any[]) => void;
         readonly middleware: {
             capture: {
                 use(cb: (bot: B, message: M, convo: Conversation<M>, next: () => void) => void): void;
@@ -104,7 +44,7 @@ declare namespace Botkit {
             send: {
                 use(cb: (bot: B, message: M, next: () => void) => void): void;
             };
-        }
+        };
         readonly storage: {
             users: Storage<User>;
             channels: Storage<Channel>;
@@ -144,65 +84,6 @@ declare namespace Botkit {
         key?: string;
         multiple?: boolean;
     }
-    interface FacebookAttachment {
-        type: 'audio' | 'file' | 'image' | 'video';
-        payload: any;
-    }
-    interface FacebookBot extends Bot<FacebookSpawnConfiguration, FacebookMessage> {
-        replyWithTyping(src: FacebookMessage, resp: string | FacebookMessage, cb?: (err: Error) => void): void;
-        startTyping(src: FacebookMessage, cb?: (err: Error) => void): void;
-        stopTyping(src: FacebookMessage, cb?: (err: Error) => void): void;
-    }
-    interface FacebookConfiguration extends Configuration {
-        access_token: string;
-        app_secret?: string;
-        receive_via_postback?: boolean;
-        require_delivery?: boolean;
-        validate_requests?: boolean;
-        verify_token: string;
-    }
-    interface FacebookController extends Controller<FacebookSpawnConfiguration, FacebookMessage, FacebookBot> {
-        readonly api: {
-            attachment_upload: {
-                upload(attachment: FacebookAttachment, cb: (err: Error, attachment_id: string) => void): void;
-            };
-            messenger_profile: any;
-            thread_settings: any;
-        };
-        createWebhookEndpoints(webserver: any, bot: FacebookBot, cb?: () => void): this;
-    }
-    interface FacebookMessage extends Message {
-        attachment?: FacebookAttachment;
-        notification_type: 'REGULAR' | 'SILENT_PUSH' | 'NO_PUSH';
-        payload?: string;
-        sender_action?: 'typing_on' | 'typing_off';
-    }
-    interface FacebookMessengerProfileAPI {
-        account_linking(payload: string): void;
-        delete_account_linking(): void;
-        delete_domain_whitelist(): void;
-        delete_get_started(): void;
-        delete_greeting(): void;
-        delete_home_url(): void;
-        delete_menu(): void;
-        delete_target_audience(): void;
-        domain_whitelist(payload: string | string[]): void;
-        get_account_linking(cb: (err: Error, body: any) => void): void;
-        get_domain_whitelist(cb: (err: Error, body: any) => void): void;
-        get_get_started(cb: (err: Error, body: any) => void): void;
-        get_greeting(cb: (err: Error, body: any) => void): void;
-        get_home_url(cb: (err: Error, body: any) => void): void;
-        get_started(payload: string): void;
-        get_menu(cb: (err: Error, body: any) => void): void;
-        get_messenger_code(image_size: number, cb: (err: Error, uri: string) => void, ref?: string): void;
-        get_target_audience(cb: (err: Error, body: any) => void): void;
-        greeting(payload: string | { locale: string; text: string; }[]): void;
-        home_url(payload: { url: string; webview_height_ratio: 'tall'; webview_share_button?: 'show' | 'hide'; in_test?: boolean; }): void;
-        menu(payload: any): void;
-        target_audience(payload: { audience_type: 'all' | 'custom' | 'none'; countries?: { blacklist?: string[]; whitelist?: string[]; }; }): void;
-    }
-    interface FacebookSpawnConfiguration {
-    }
     interface Identity {
         name: string;
         emails: string[];
@@ -220,11 +101,11 @@ declare namespace Botkit {
         author_name?: string;
         color?: string;
         fallback?: string;
-        fields?: {
+        fields?: Array<{
             title: string;
             value: string;
             short: boolean;
-        }[];
+        }>;
         footer?: string;
         footer_icon?: string;
         image_url?: string;
@@ -276,7 +157,8 @@ declare namespace Botkit {
         createHomepageEndpoint(webserver: any): this;
         createOauthEndpoints(webserver: any, callback: (err: Error, req: any, res: any) => void): this;
         createWebhookEndpoints(webserver: any, authenticationTokens?: string[]): this;
-        setupWebserver();
+
+        setupWebserver(): this;
         getAuthorizeURL(team_id: string, redirect_params: any): string;
     }
     interface SlackMessage extends Message {
@@ -299,10 +181,10 @@ declare namespace Botkit {
     interface SlackWebAPI {
         auth: {
             test: SlackWebAPIMethod;
-        },
+        };
         oauth: {
             access: SlackWebAPIMethod;
-        }
+        };
         channels: {
             archive: SlackWebAPIMethod;
             create: SlackWebAPIMethod;
@@ -451,44 +333,15 @@ declare namespace Botkit {
     interface Team {
         id: string;
     }
-    interface TwilioIPMBot extends Bot<TwilioIPMSpawnConfiguration, TwilioIPMMessage> {
-        readonly api: any;
-    }
-    interface TwilioIPMConfiguration extends Configuration {
-    }
-    interface TwilioIPMController extends Controller<TwilioIPMSpawnConfiguration, TwilioIPMMessage, TwilioIPMBot> {
-        createWebhookEndpoints(webserver: any, bot: TwilioIPMBot): this;
-    }
-    interface TwilioIPMMessage extends Message {
-    }
-    interface TwilioIPMSpawnConfiguration {
-        autojoin?: boolean;
-        identity?: string;
-        TWILIO_IPM_SERVICE_SID: string;
-        TWILIO_ACCOUNT_SID: string;
-        TWILIO_API_KEY: string;
-        TWILIO_API_SECRET: string;
-    }
-    interface TwilioSMSBot extends Bot<TwilioSMSSpawnConfiguration, TwilioSMSMessage> {
-    }
-    interface TwilioSMSConfiguration extends Configuration {
-        account_sid: string;
-        auth_token: string;
-        twilio_number: string;
-    }
-    interface TwilioSMSController extends Controller<TwilioSMSSpawnConfiguration, TwilioSMSMessage, TwilioSMSBot> {
-        createWebhookEndpoints(webserver: any, bot: TwilioSMSBot, cb?: () => void): this;
-    }
-    interface TwilioSMSMessage extends Message {
-    }
-    interface TwilioSMSSpawnConfiguration {
-    }
     interface User {
         id: string;
         name?: string;
     }
-    type ConversationCallback<M extends Message> = ((message: M, convo: Conversation<M>) => void) | ({ pattern?: string | RegExp; default?: boolean; callback: (message: M, convo: Conversation<M>) => void; }[]);
-    type ConversationStatusType = 'completed' | 'active' | 'stopped' | 'timeout' | 'ending' | 'inactive';
+
+    type ConversationCallback<M extends Message> =
+        ((message: M, convo: Conversation<M>) => void)
+        | (Array<{ pattern?: string | RegExp; default?: boolean; callback: (message: M, convo: Conversation<M>) => void; }>);
+    type ConversationStatusType = "completed" | "active" | "stopped" | "timeout" | "ending" | "inactive";
     type HearsCallback<S, M extends Message, B extends Bot<S, M>> = (bot: B, message: M) => void;
     type HearsFunction<M extends Message> = (tests: string | string[] | RegExp | RegExp[], message: M) => boolean;
     type SlackWebAPIMethod = (data: any, cb: (err: Error, response: any) => void) => void;

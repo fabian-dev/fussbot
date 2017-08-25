@@ -12,7 +12,10 @@
       "allow-declarations"
     ],
     "interface-name": ["never-prefix"],
-    "no-trailing-whitespace": ["ignore-comments"]
+    "no-trailing-whitespace": [
+      "ignore-comments"
+    ],
+    "no-var-requires": false
   },
   "rulesDirectory": []
 }
