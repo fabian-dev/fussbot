@@ -1,5 +1,5 @@
 import * as os from "os";
-import Botkit from "botkit";
+import * as Botkit from "./botkit";
 
 if (!process.env.SLACK_API_TOKEN) {
     console.log("Error: Specify Slacks API token in environment");

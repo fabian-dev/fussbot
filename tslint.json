@@ -10,7 +10,9 @@
     ],
     "no-namespace": [
       "allow-declarations"
-    ]
+    ],
+    "interface-name": ["never-prefix"],
+    "no-trailing-whitespace": ["ignore-comments"]
   },
   "rulesDirectory": []
 }

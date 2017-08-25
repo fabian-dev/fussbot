@@ -1,7 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "allowJs": true,
     "sourceMap": true,
@@ -11,7 +11,8 @@
     "removeComments": true,
     "types": [
       "node"
-    ]
+    ],
+    "noImplicitAny": true
   },
   "include": [
     "src/**/*"
