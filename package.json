@@ -4,7 +4,9 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node bot.js",
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": "6.10",
@@ -15,7 +17,11 @@
     "botkit-storage-redis": "^1.1.0",
     "wordfilter": "^0.2.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^8.0.25",
+    "tslint": "^5.6.0",
+    "typescript": "^2.4.2"
+  },
   "author": "",
   "license": "ISC"
 }

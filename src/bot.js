@@ -72,7 +72,7 @@ if (!process.env.SLACK_API_TOKEN) {
 }
 
 if (!process.env.REDIS_URL) {
-    console.log('Error: No redis url is present in environment');
+    console.log('Error: Specify redis url in environment');
     process.exit(1);
 }
 

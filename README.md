@@ -29,7 +29,7 @@ Make sure the app has now a `REDIS_URL` environment variable set by heroku.
 
 With
 
-`git push heroku master`
+`git push heroku master` or if the GitHub repo is connected to Heroku (see below) simply `git push`.
 
 Make sure no *web* but a *worker* process of this app is started (refer to `Procfile`).
 
@@ -48,4 +48,17 @@ worker.1: up 2017/07/15 22:46:57 +0200 (~ 10m ago)
 ```
 
 
+## Connect with GitHub for automatic deploys
 
+If the project is on GitHub, the repo should have an origin and a heroku remote:
+
+```
+$ git remote -v
+heroku  https://git.heroku.com/<heroku-app>.git (fetch)
+heroku  https://git.heroku.com/<heroku-app>.git (push)
+origin  https://github.com/<user>/<repo>.git (fetch)
+origin  https://github.com/<user>/<repo>.git (push)
+```
+
+In this case you can connect the GitHub repo within the heroku app and enable automatic deploys
+on pushes to the remote origin.
