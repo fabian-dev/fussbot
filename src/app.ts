@@ -1,5 +1,6 @@
 import * as os from "os";
-import {Message, SlackBot} from "./botkit";
+import { Message, SlackBot } from "./botkit";
+import { register } from "./skills/hello";
 
 const Botkit = require("botkit");
 const RedisStorage = require("botkit-storage-redis");
@@ -23,13 +24,11 @@ const controller = Botkit.slackbot({
     storage: redisStorage,
 });
 
-const slackBot = controller.spawn({
+const slackBot: SlackBot = controller.spawn({
     token: process.env.SLACK_API_TOKEN,
 }).startRTM();
 
-/*
-require("./skills/hello").register(controller);
- */
+register(controller);
 
 /*
 controller.hears(["call me (.*)", "my name is (.*)"], "direct_message,direct_mention,mention", function (bot, message) {
