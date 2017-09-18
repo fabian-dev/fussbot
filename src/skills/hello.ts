@@ -1,10 +1,6 @@
 import { SlackBot, SlackController, SlackMessage, User } from "../botkit";
 
-export function register(controller: SlackController) {
-    controller.hears(["hello", "hi"], "direct_message,direct_mention,mention", (b, m) => handle(b, m, controller));
-}
-
-function handle(bot: SlackBot, message: SlackMessage, controller: SlackController) {
+export function handleHello(bot: SlackBot, message: SlackMessage, controller: SlackController) {
 
     bot.api.reactions.add({
         timestamp: message.ts,

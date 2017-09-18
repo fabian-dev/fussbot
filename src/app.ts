@@ -1,6 +1,7 @@
 import * as os from "os";
-import { Message, SlackBot } from "./botkit";
-import { register } from "./skills/hello";
+import { Message, SlackBot, SlackMessage } from "./botkit";
+import { handleHello } from "./skills/hello";
+import { Skills } from "./skills";
 
 const Botkit = require("botkit");
 const RedisStorage = require("botkit-storage-redis");
@@ -28,7 +29,10 @@ const slackBot: SlackBot = controller.spawn({
     token: process.env.SLACK_API_TOKEN,
 }).startRTM();
 
-register(controller);
+const onHello = (bot: SlackBot, message: SlackMessage) => handleHello(bot, message, controller);
+
+Skills.on(controller)
+    .addDirectHandler(["hello", "hi"], onHello);
 
 /*
 controller.hears(["call me (.*)", "my name is (.*)"], "direct_message,direct_mention,mention", function (bot, message) {
