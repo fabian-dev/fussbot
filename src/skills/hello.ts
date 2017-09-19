@@ -1,6 +1,6 @@
-import { SlackBot, SlackController, SlackMessage, User } from "../botkit";
+import { SlackBot, SlackMessage, Storage, User } from "../botkit";
 
-export function handleHello(bot: SlackBot, message: SlackMessage, controller: SlackController) {
+export function handleHello(bot: SlackBot, message: SlackMessage, users: Storage<User>) {
 
     bot.api.reactions.add({
         timestamp: message.ts,
@@ -12,9 +12,7 @@ export function handleHello(bot: SlackBot, message: SlackMessage, controller: Sl
         }
     });
 
-    // Todo: get rid of controller here
-
-    controller.storage.users.get(message.user || "", (err: Error, user: User) => {
+    users.get(message.user || "", (err: Error, user: User) => {
 
         if (user && user.name) {
             bot.reply(message, "Hello " + user.name + "!!");

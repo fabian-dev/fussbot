@@ -1,7 +1,7 @@
-import * as os from "os";
-import { Message, SlackBot, SlackMessage } from "./botkit";
+import { SlackBot, SlackMessage } from "./botkit";
 import { handleHello } from "./skills/hello";
-import { Skills } from "./skills";
+import { handleUptime } from "./skills/uptime";
+import { handleCallMe } from "./skills/callme";
 
 const Botkit = require("botkit");
 const RedisStorage = require("botkit-storage-redis");
@@ -29,27 +29,23 @@ const slackBot: SlackBot = controller.spawn({
     token: process.env.SLACK_API_TOKEN,
 }).startRTM();
 
-const onHello = (bot: SlackBot, message: SlackMessage) => handleHello(bot, message, controller);
 
-Skills.on(controller)
-    .addDirectHandler(["hello", "hi"], onHello);
+registerDirect(["hello", "hi"],
+    (bot, message) => handleHello(bot, message, controller.storage.users));
+
+registerDirect(["call me (.*)", "my name is (.*)"],
+    (bot, message) => handleCallMe(bot, message, controller.storage.users));
+
+registerDirect(["uptime"], handleUptime);
+
+function registerDirect(keywords: string[],
+                        handler: (bot: SlackBot, message: SlackMessage) => void) {
+    const directEvents = "direct_message,direct_mention,mention";
+
+    controller.hears(keywords, directEvents, handler);
+}
 
 /*
-controller.hears(["call me (.*)", "my name is (.*)"], "direct_message,direct_mention,mention", function (bot, message) {
-    const name = message.match[1];
-    controller.storage.users.get(message.user, function (err, user) {
-        if (!user) {
-            user = {
-                id: message.user,
-            };
-        }
-        user.name = name;
-        controller.storage.users.save(user, function (err, id) {
-            bot.reply(message, "Got it. I will call you " + user.name + " from now on.");
-        });
-    });
-});
-
 controller.hears(["what is my name", "who am i"], "direct_message,direct_mention,mention", function (bot, message) {
 
     controller.storage.users.get(message.user, function (err, user) {
@@ -117,33 +113,3 @@ controller.hears(["what is my name", "who am i"], "direct_message,direct_mention
 });
 
 */
-
-controller.hears(["uptime", "identify yourself", "who are you", "what is your name"],
-    "direct_message,direct_mention,mention", (bot: SlackBot, message: Message) => {
-
-        const hostname = os.hostname();
-        const uptime = formatUptime(process.uptime());
-
-        bot.reply(message,
-            ":robot_face: I am a bot named <@" + bot.identity.name +
-            ">. I have been running for " + uptime + " on " + hostname + ".");
-
-    });
-
-function formatUptime(uptime: any) {
-    let unit = "second";
-    if (uptime > 60) {
-        uptime = uptime / 60;
-        unit = "minute";
-    }
-    if (uptime > 60) {
-        uptime = uptime / 60;
-        unit = "hour";
-    }
-    if (uptime !== 1) {
-        unit = unit + "s";
-    }
-
-    uptime = uptime + " " + unit;
-    return uptime;
-}
