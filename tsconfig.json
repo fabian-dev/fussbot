@@ -12,7 +12,7 @@
     "types": [
       "node"
     ],
-    "noImplicitAny": true
+    "noImplicitAny": false // reset to true after botkit.d.ts is fixed
   },
   "include": [
     "src/**/*"
