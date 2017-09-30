@@ -1,4 +1,4 @@
-import { SlackBot, SlackMessage } from "./botkit";
+import { SlackBot, SlackMessage } from "botkit";
 import { handleHello } from "./skills/hello";
 import { handleUptime } from "./skills/uptime";
 import { handleCallMe } from "./skills/callme";

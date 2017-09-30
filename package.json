@@ -13,7 +13,7 @@
     "npm": "3.10"
   },
   "dependencies": {
-    "botkit": "^0.5.5",
+    "botkit": "^0.6.3",
     "botkit-storage-redis": "^1.1.0",
     "wordfilter": "^0.2.6"
   },

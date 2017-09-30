@@ -1,4 +1,4 @@
-import { Message, SlackBot } from "../botkit";
+import { Message, SlackBot } from "botkit";
 import * as os from "os";
 
 export function handleUptime(bot: SlackBot, message: Message) {

@@ -1,4 +1,4 @@
-import { SlackBot, SlackMessage, Storage, User } from "../botkit";
+import { SlackBot, SlackMessage, Storage, User } from "botkit";
 
 export function handleHello(bot: SlackBot, message: SlackMessage, users: Storage<User>) {
 
