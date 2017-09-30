@@ -9,8 +9,7 @@
     "postinstall": "npm run build"
   },
   "engines": {
-    "node": "6.10",
-    "npm": "3.10"
+    "node": "8.4"
   },
   "dependencies": {
     "botkit": "^0.6.3",
