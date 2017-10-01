@@ -37,6 +37,9 @@ registerDirect(["hello", "hi"],
 registerDirect(["call me (.*)", "my name is (.*)"],
     (bot, message) => handleCallMe(bot, message, controller.storage.users));
 
+registerDirect(["forget me"],
+    (bot, message) => handleCallMe(bot, message, controller.storage.users));
+
 registerDirect(["what is my name", "who am i"],
     (bot, message) => handleWhatIsMyName(bot, message, controller.storage.users));
 
