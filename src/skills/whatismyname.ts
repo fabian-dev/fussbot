@@ -46,8 +46,6 @@ export function handleWhatIsMyName(bot: SlackBot, message: Message, users: Stora
                     convo.on("end", (convo: Conversation<SlackMessage>) => {
                         if (convo.status === "completed") {
 
-                            bot.reply(message, "OK! I will update my dossier...");
-
                             users.get(message.user || "", (err: Error, user: User) => {
                                 if (!user) {
                                     user = {
