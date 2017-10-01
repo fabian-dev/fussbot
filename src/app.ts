@@ -3,6 +3,7 @@ import { handleHello } from "./skills/hello";
 import { handleUptime } from "./skills/uptime";
 import { handleCallMe } from "./skills/callme";
 import { handleWhatIsMyName } from "./skills/whatismyname";
+import { handleForgetMe } from "./skills/forgetme";
 
 const Botkit = require("botkit");
 const RedisStorage = require("botkit-storage-redis");
@@ -38,7 +39,7 @@ registerDirect(["call me (.*)", "my name is (.*)"],
     (bot, message) => handleCallMe(bot, message, controller.storage.users));
 
 registerDirect(["forget me"],
-    (bot, message) => handleCallMe(bot, message, controller.storage.users));
+    (bot, message) => handleForgetMe(bot, message, controller.storage.users));
 
 registerDirect(["what is my name", "who am i"],
     (bot, message) => handleWhatIsMyName(bot, message, controller.storage.users));
