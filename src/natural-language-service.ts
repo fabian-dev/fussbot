@@ -62,9 +62,7 @@ export class Token {
 
 export class NaturalLanguageService {
 
-    private client: any;
-
-    static fromEnvVars() {
+    static fromEnvVars(): NaturalLanguageService {
         exitIfAnyMissing(['GCP_PROJECT_ID', 'GCP_CLIENT_EMAIL', 'GCP_PRIVATE_KEY']);
 
         return new NaturalLanguageService(
@@ -72,6 +70,8 @@ export class NaturalLanguageService {
             process.env.GCP_CLIENT_EMAIL as string,
             process.env.GCP_PRIVATE_KEY as string);
     }
+
+    private client: any;
 
     constructor(gcpProjectId: string, gcpClientEmail: string, gcpPrivateKey: string) {
         const options = {
@@ -81,7 +81,9 @@ export class NaturalLanguageService {
                 private_key: gcpPrivateKey
             }
         };
+        console.log("GCP LanguageServiceClient Try to initializ");
         this.client = require('@google-cloud/language').LanguageServiceClient(options);
+        console.log("GCP LanguageServiceClient is initialized");
     }
 
     analyse(text: string): Promise<Token[]> {

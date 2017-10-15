@@ -18,9 +18,9 @@
     "wordfilter": "^0.2.6"
   },
   "devDependencies": {
-    "@types/node": "^8.0.25",
-    "tslint": "^5.6.0",
-    "typescript": "^2.4.2"
+    "@types/node": "^8.0.34",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3"
   },
   "author": "",
   "license": "ISC"
