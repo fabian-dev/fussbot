@@ -1,23 +1,17 @@
 import { SlackBot, SlackMessage } from "botkit";
+import { NaturalLanguageService } from "./natural-language-service";
+import { handleCallMe } from "./skills/callme";
+import { handleForgetMe } from "./skills/forgetme";
 import { handleHello } from "./skills/hello";
 import { handleUptime } from "./skills/uptime";
-import { handleCallMe } from "./skills/callme";
 import { handleWhatIsMyName } from "./skills/whatismyname";
-import { handleForgetMe } from "./skills/forgetme";
+import { exitIfMissing } from "./utils";
+import { handleDumpSyntax } from "./skills/dump-syntax";
 
 const Botkit = require("botkit");
 const RedisStorage = require("botkit-storage-redis");
 
-if (!process.env.SLACK_API_TOKEN) {
-    console.log("Error: Specify Slacks API token in environment");
-    process.exit(1);
-}
-
-if (!process.env.REDIS_URL) {
-    console.log("Error: Specify redis url in environment");
-    process.exit(1);
-}
-
+exitIfMissing('REDIS_URL');
 const redisStorage = RedisStorage({
     url: process.env.REDIS_URL,
 });
@@ -27,6 +21,7 @@ const controller = Botkit.slackbot({
     storage: redisStorage,
 });
 
+exitIfMissing('SLACK_API_TOKEN');
 const slackBot: SlackBot = controller.spawn({
     token: process.env.SLACK_API_TOKEN,
 }).startRTM();
@@ -45,6 +40,13 @@ registerDirect(["what is my name", "who am i"],
     (bot, message) => handleWhatIsMyName(bot, message, controller.storage.users));
 
 registerDirect(["uptime"], handleUptime);
+
+const naturalLanguageService = NaturalLanguageService.fromEnvVars();
+
+registerDirect(["nl (.*)", "pos (.*)"],
+    (bot, message) => handleDumpSyntax(bot, message, naturalLanguageService));
+
+
 
 function registerDirect(keywords: string[],
                         handler: (bot: SlackBot, message: SlackMessage) => void) {
