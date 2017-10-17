@@ -73,18 +73,17 @@ export class NaturalLanguageService {
 
     private client: any;
 
-    constructor(gcpProjectId: string, gcpClientEmail: string, gcpPrivateKey: string) {
+    constructor(projectID: string, clientEmail: string, privateKey: string) {
         const options = {
             credentials: {
-                projectId: gcpProjectId,
-                client_email: gcpClientEmail,
-                private_key: gcpPrivateKey
+                projectId: projectID,
+                client_email: clientEmail,
+                private_key: `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----\n`
             }
         };
 
         const language = require('@google-cloud/language');
         this.client = new language.LanguageServiceClient(options);
-        console.log("Initialized GCP LanguageServiceClient");
     }
 
     analyse(text: string): Promise<Token[]> {
