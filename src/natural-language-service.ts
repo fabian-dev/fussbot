@@ -74,11 +74,15 @@ export class NaturalLanguageService {
     private client: any;
 
     constructor(projectID: string, clientEmail: string, privateKey: string) {
+        console.log("Retrieved PK as: " + privateKey);
+        const decoded = new Buffer(privateKey).toString('utf8');
+        console.log("Decoded PK: " + privateKey);
+
         const options = {
             credentials: {
                 projectId: projectID,
                 client_email: clientEmail,
-                private_key: privateKey
+                private_key: decoded // privateKey
             }
         };
 
