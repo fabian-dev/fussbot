@@ -10,7 +10,7 @@
     "strict": true,
     "removeComments": true,
     "types": [
-      "node"
+      "node", "jest"
     ],
     "noImplicitAny": true
   },

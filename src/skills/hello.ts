@@ -8,7 +8,7 @@ export function handleHello(bot: SlackBot, message: SlackMessage, users: Storage
         name: "robot_face",
     }, (err, res) => {
         if (err) {
-            bot.botkit.log("Failed to add emoji reaction :(", err);
+            bot.botkit.log("Failed to add emoji reaction :pug: ", err);
         }
     });
 

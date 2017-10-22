@@ -1,5 +1,6 @@
 import { SlackBot, SlackMessage } from "botkit";
-import { NaturalLanguageService, Token } from "../natural-language-service";
+import { NaturalLanguageService } from "../natural-language-service";
+import { Token } from "../natural-language";
 
 export function handleDumpSyntax(bot: SlackBot, message: SlackMessage, nlService: NaturalLanguageService) {
 
@@ -14,7 +15,7 @@ function dumpTokens(bot: SlackBot, message: SlackMessage, tokens: Token[]) {
     bot.api.reactions.add({
         timestamp: message.ts,
         channel: message.channel,
-        name: ":rabbit:",
+        name: "pug",
     }, (err, res) => {
         if (err) {
             bot.botkit.log("Dump Syntax Skill: Failed to add reaction in ", err);

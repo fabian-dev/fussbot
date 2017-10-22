@@ -1,0 +1,87 @@
+export class PartOfSpeech {
+    private nlPOS: any;
+
+    static wrap(nlPOS: any) {
+        return new PartOfSpeech(nlPOS)
+    }
+
+    constructor(nlPOS: any) {
+        this.nlPOS = nlPOS;
+    }
+
+    get tag(): string {
+        return this.nlPOS.tag;
+    }
+
+    get mood(): string {
+        return this.nlPOS.mood;
+    }
+
+    get properName(): string {
+        return this.nlPOS.proper;
+    }
+
+    get voice(): string {
+        return this.nlPOS.voice;
+    }
+
+    toString() {
+        return `${this.tag} | ${this.mood} | ${this.properName} | ${this.voice}`;
+    }
+}
+
+export class Token {
+    private nlToken: any;
+
+    static wrap(nlToken: any) {
+        return new Token(nlToken)
+    }
+
+    constructor(nlToken: any) {
+        this.nlToken = nlToken;
+    }
+
+    get text(): string {
+        return this.nlToken.text.content;
+    }
+
+    get dependency(): any {
+        return this.nlToken.dependencyEdge;
+    }
+
+    get pos(): PartOfSpeech {
+        return this.partOfSpeech;
+    }
+
+    get partOfSpeech(): PartOfSpeech {
+        return PartOfSpeech.wrap(this.nlToken.partOfSpeech);
+    }
+}
+
+export class Adjacent {
+
+    constructor(public adj: string, public noun: string) {
+    }
+}
+
+export function adjacentAdvAndNouns(tokens: Token[]): Adjacent[] {
+    const adjacents: Adjacent[] = [];
+
+    pairwise(tokens, (curr, next) => {
+
+        if (curr.pos.tag === "ADJ" && next.pos.tag === "NOUN") {
+            adjacents.push(new Adjacent(curr.text, next.text));
+        }
+        if (curr.pos.tag === "NOUN" && next.pos.tag === "ADJ") {
+            adjacents.push(new Adjacent(next.text, curr.text));
+        }
+    });
+    return adjacents;
+}
+
+
+function pairwise(tokens: Token[], lambda: ((curr: Token, next: Token) => void)) {
+    for (let i = 0; i < tokens.length - 1; i++) {
+        lambda(tokens[i], tokens[i + 1]);
+    }
+}
