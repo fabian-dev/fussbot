@@ -61,10 +61,20 @@ export class Token {
 export class Adjacent {
 
     constructor(public adj: string, public noun: string) {
+        if (adj == null || adj.length == 0 || noun == null || noun.length == 0) {
+            throw new Error("Cannot construct invalid Adjacent");
+        }
+    }
+
+    get adjSound(): string {
+        if (this.adj.toLowerCase().startsWith("sch")) {
+            return "sch";
+        }
+        return this.adj.toLowerCase()[0];
     }
 }
 
-export function adjacentAdvAndNouns(tokens: Token[]): Adjacent[] {
+export function getAdjacentAdvAndNouns(tokens: Token[]): Adjacent[] {
     const adjacents: Adjacent[] = [];
 
     pairwise(tokens, (curr, next) => {

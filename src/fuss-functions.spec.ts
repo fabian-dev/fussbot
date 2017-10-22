@@ -1,4 +1,5 @@
-import { fuss, fussReply } from "./fuss-functions";
+import { fuss, fussAll, fussOneOf, fussReply } from "./fuss-functions";
+import { Adjacent } from "./natural-language";
 
 describe("fussReply", () => {
 
@@ -8,9 +9,35 @@ describe("fussReply", () => {
 
         const actual = sut("Schadler");
 
-        console.log(actual);
-
         expect(actual).toContain("Schadler");
+
+    });
+
+});
+
+describe("fussOneOf", () => {
+
+    const sut = (adjacentes: Adjacent[]) => fussOneOf(adjacentes);
+
+    it("returns null if nothing is fussable", () => {
+
+        const actual = sut([]);
+
+        expect(actual).toBe(null);
+
+    });
+
+});
+
+describe("fuss", () => {
+
+    const sut = (adjacent: Adjacent) => fuss(adjacent);
+
+    it("concatenates adj and noun", () => {
+
+        const actual = sut(new Adjacent("scheiß", "Adler"));
+
+        expect(actual).toBe("Schadler");
 
     });
 
