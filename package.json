@@ -16,7 +16,6 @@
     "@google-cloud/language": "^0.13.0",
     "botkit": "^0.6.4",
     "botkit-storage-redis": "^1.1.0",
-    "eol": "^0.9.1",
     "wordfilter": "^0.2.6"
   },
   "devDependencies": {
