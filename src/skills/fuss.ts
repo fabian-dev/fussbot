@@ -18,6 +18,11 @@ export function handleForFuss(bot: SlackBot, message: SlackMessage, nlService: N
 
 function fussIfApplicable(tokens: Token[]): string | null {
 
+    console.log("Tokens in sentence are: ");
+    for (let token of tokens) {
+        console.log("TOKEN: " + token.debug());
+    }
+
     const adjacentes = getAdjacentAdvAndNouns(tokens);
 
     if (adjacentes.length == 0) {

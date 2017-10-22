@@ -24,10 +24,6 @@ export class PartOfSpeech {
     get voice(): string {
         return this.nlPOS.voice;
     }
-
-    toString() {
-        return `${this.tag} | ${this.mood} | ${this.properName} | ${this.voice}`;
-    }
 }
 
 export class Token {
@@ -55,6 +51,11 @@ export class Token {
 
     get partOfSpeech(): PartOfSpeech {
         return PartOfSpeech.wrap(this.nlToken.partOfSpeech);
+    }
+
+
+    debug(): string {
+        return `Tag: ${this.pos.tag} | Text: ${this.text}`;
     }
 }
 

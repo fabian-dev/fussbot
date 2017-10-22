@@ -39,7 +39,7 @@ describe("Adjacent", () => {
 
     it("should treat SCH special", () => {
 
-        const adjacent = new Adjacent("scheiß", "Adler")
+        const adjacent = new Adjacent("scheiß", "Adler");
 
         const sut = adjacent.adjSound;
 
