@@ -32,7 +32,7 @@ function fussIfApplicable(tokens: Token[]): string | null {
 }
 
 function doNotSkip(): boolean {
-    return Math.random() >= 0.7;
+    return Math.random() >= 0.5;
 }
 
 function sendReply(bot: SlackBot, message: SlackMessage, reply: string | null) {

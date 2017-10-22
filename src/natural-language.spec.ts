@@ -37,13 +37,37 @@ describe("getAdjacentAdvAndNouns", () => {
 
 describe("Adjacent", () => {
 
-    it("should treat SCH special", () => {
+    it("should treat SCH special in adjSound", () => {
 
         const adjacent = new Adjacent("scheiß", "Adler");
 
         const sut = adjacent.adjSound;
 
         expect(sut).toBe("sch");
+    });
+
+    it("should treat PF special in adjSound", () => {
+
+        const adjacent = new Adjacent("pfeffriger", "Adler");
+
+        const sut = adjacent.adjSound;
+
+        expect(sut).toBe("pf");
+    });
+
+    it("should treat only soft nouns (those with a vowel at the beginning) as soft", () => {
+
+        let adjacent = new Adjacent("scheiß", "Adler");
+
+        let sut = adjacent.isSoftNoun;
+
+        expect(sut).toBe(true);
+
+        adjacent = new Adjacent("scheiß", "Kugel");
+
+        sut = adjacent.isSoftNoun;
+
+        expect(sut).toBe(false);
     });
 
 });

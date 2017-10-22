@@ -6,7 +6,7 @@ export function fussReply(fussed: string): string {
     const replyTemplates = [
         "Ich denke du meinst %.",
         "% bitte!",
-        "Für mich ist das eher ein %."
+        "Ich nenn' das immer %."
     ];
 
     const randomReply = pickRandom<string>(replyTemplates);
@@ -31,7 +31,7 @@ export function fussAll(adjacentes: Adjacent[]): string[] {
 }
 
 export function canFuss(adjacent: Adjacent): boolean {
-    return true;
+    return adjacent.isSoftNoun;
 }
 
 export function fuss(adjacent: Adjacent): string {

@@ -68,10 +68,23 @@ export class Adjacent {
     }
 
     get adjSound(): string {
-        if (this.adj.toLowerCase().startsWith("sch")) {
-            return "sch";
+        const coherentSounds = ["sch", "pf"];
+
+        for (const coherent of coherentSounds) {
+            if (this.adj.toLowerCase().startsWith(coherent)) {
+                return coherent;
+            }
         }
+
         return this.adj.toLowerCase()[0];
+    }
+
+    get isSoftNoun(): boolean {
+        return Adjacent.startsWithVowel(this.noun);
+    }
+
+    private static startsWithVowel(target: string) {
+        return /^[aeiou]\w+$/i.test(target);
     }
 }
 
