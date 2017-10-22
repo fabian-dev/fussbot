@@ -63,27 +63,25 @@ export class Token {
 export class NaturalLanguageService {
 
     static fromEnvVars(): NaturalLanguageService {
-        exitIfAnyMissing(['GCP_PROJECT_ID', 'GCP_CLIENT_EMAIL', 'GCP_PRIVATE_KEY']);
+        exitIfAnyMissing(['GCP_PROJECT_ID', 'GCP_CLIENT_EMAIL', 'GCP_PRIVATE_KEY_BASE64']);
 
         return new NaturalLanguageService(
             process.env.GCP_PROJECT_ID as string,
             process.env.GCP_CLIENT_EMAIL as string,
-            process.env.GCP_PRIVATE_KEY as string);
+            process.env.GCP_PRIVATE_KEY_BASE64 as string);
     }
 
     private client: any;
 
     constructor(projectID: string, clientEmail: string, privateKeyBase64: string) {
-        console.log("Retrieved PK as: " + privateKeyBase64);
 
-        const decoded = Buffer.from(privateKeyBase64, "base64").toString('utf8');
-        console.log("Decoded PK: " + decoded);
+        const privateKey = Buffer.from(privateKeyBase64, "base64").toString('utf8');
 
         const options = {
             credentials: {
                 projectId: projectID,
                 client_email: clientEmail,
-                private_key: decoded // privateKey
+                private_key: privateKey
             }
         };
 

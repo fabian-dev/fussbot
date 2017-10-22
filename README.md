@@ -6,6 +6,13 @@ Go to `http://my.slack.com/services/new/bot` and copy the API token.
 
 Update `heroku-config.sh` (is executed later on).
 
+## Get GCP Secrets
+
+Create a new Service Account and create and download a Private Key in JSON format.
+
+Copy project ID and client email from the JSON file to `heroku-config.sh`
+
+Base64 encode the private key from within the .json using encode-base64.js and copy that value as well.
 
 ## Create Heroku App
 
