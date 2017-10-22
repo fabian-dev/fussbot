@@ -4,8 +4,9 @@ import { Adjacent } from "./natural-language";
 export function fussReply(fussed: string): string {
 
     const replyTemplates = [
-        "Ich denke du meinst %",
-        "% bitte!"
+        "Ich denke du meinst %.",
+        "% bitte!",
+        "Für mich ist das eher ein %."
     ];
 
     const randomReply = pickRandom<string>(replyTemplates);
@@ -18,8 +19,6 @@ export function fussOneOf(adjacentes: Adjacent[]): string | null {
     const allFussed = fussAll(adjacentes);
 
     if (allFussed.length > 0) {
-        console.log("Will pick a random fussed");
-
         return pickRandom<string>(allFussed);
     }
 
@@ -28,11 +27,7 @@ export function fussOneOf(adjacentes: Adjacent[]): string | null {
 
 export function fussAll(adjacentes: Adjacent[]): string[] {
 
-    const allFussed = adjacentes.filter(a => canFuss(a)).map(a => fuss(a));
-
-    console.log("All fussed is: " + JSON.stringify(allFussed));
-
-    return allFussed;
+    return adjacentes.filter(a => canFuss(a)).map(a => fuss(a));
 }
 
 export function canFuss(adjacent: Adjacent): boolean {

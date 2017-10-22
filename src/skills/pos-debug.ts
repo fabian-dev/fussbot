@@ -5,6 +5,6 @@ export function handlePOSDebug(bot: SlackBot, message: SlackMessage, nlService: 
 
     if (message.match) {
         const toAnalyse = message.match[1];
-        nlService.analyse(toAnalyse).then(tokens => bot.reply(message, JSON.stringify(tokens)));
+        nlService.analyse(toAnalyse).then(tokens => bot.reply(message, "Guys at Google treat this: " + JSON.stringify(tokens)));
     }
 }
