@@ -78,7 +78,7 @@ export class NaturalLanguageService {
             credentials: {
                 projectId: projectID,
                 client_email: clientEmail,
-                private_key: `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----\n`
+                private_key: privateKey
             }
         };
 

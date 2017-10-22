@@ -5,4 +5,4 @@ heroku config:set NPM_CONFIG_PRODUCTION=false
 heroku config:set SLACK_API_TOKEN=<token here>
 heroku config:set GCP_PROJECT_ID=<id>
 heroku config:set GCP_CLIENT_EMAIL=<client email>
-heroku config:set GCP_PRIVATE_KEY=<private key without BEGIN and END lines>
+heroku config:set GCP_PRIVATE_KEY=<private key>
