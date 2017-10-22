@@ -3,7 +3,7 @@ import { fussOneOf, fussReply } from "../fuss-functions";
 import { getAdjacentAdvAndNouns, Token } from "../natural-language";
 import { NaturalLanguageService } from "../natural-language-service";
 
-export function handleForFuss(bot: SlackBot, message: SlackMessage, nlService: NaturalLanguageService) {
+export function handleAmbientFuss(bot: SlackBot, message: SlackMessage, nlService: NaturalLanguageService) {
 
     if (message.match) {
         const toAnalyse = message.match[1];

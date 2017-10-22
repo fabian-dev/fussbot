@@ -2,7 +2,7 @@ import { SlackBot, SlackMessage } from "botkit";
 import { NaturalLanguageService } from "./natural-language-service";
 import { handleCallMe } from "./skills/callme";
 import { handleForgetMe } from "./skills/forgetme";
-import { handleForFuss } from "./skills/fuss";
+import { handleAmbientFuss } from "./skills/fuss";
 import { handleHello } from "./skills/hello";
 import { handlePOSDebug } from "./skills/pos-debug";
 import { handleUptime } from "./skills/uptime";
@@ -27,6 +27,8 @@ const slackBot: SlackBot = controller.spawn({
     token: process.env.SLACK_API_TOKEN,
 }).startRTM();
 
+const naturalLanguageService = NaturalLanguageService.fromEnvVars();
+
 
 registerDirect(["hello", "hi"],
     (bot, message) => handleHello(bot, message, controller.storage.users));
@@ -42,13 +44,8 @@ registerDirect(["what is my name", "who am i"],
 
 registerDirect(["uptime"], handleUptime);
 
-const naturalLanguageService = NaturalLanguageService.fromEnvVars();
-
 registerDirect(["nl (.*)", "pos (.*)"],
     (bot, message) => handlePOSDebug(bot, message, naturalLanguageService));
-
-registerDirect(["fuss (.*)"],
-    (bot, message) => handleForFuss(bot, message, naturalLanguageService));
 
 
 function registerDirect(keywords: string[],
@@ -56,4 +53,13 @@ function registerDirect(keywords: string[],
     const directEvents = "direct_message,direct_mention,mention";
 
     controller.hears(keywords, directEvents, handler);
+}
+
+
+registerAmbient(["(.*)"],
+    (bot, message) => handleAmbientFuss(bot, message, naturalLanguageService));
+
+function registerAmbient(keywords: string[],
+                         handler: (bot: SlackBot, message: SlackMessage) => void) {
+    controller.hears(keywords, "message_received", handler);
 }
