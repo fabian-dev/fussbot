@@ -9,7 +9,13 @@ export function handleForFuss(bot: SlackBot, message: SlackMessage, nlService: N
         const toAnalyse = message.match[1];
 
         nlService.analyse(toAnalyse)
-            .then(tokens => sendReply(bot, message, fussIfApplicable(tokens)));
+            .then(tokens => {
+                const reply = fussIfApplicable(tokens);
+
+                if (doNotSkip()) {
+                    sendReply(bot, message, reply)
+                }
+            });
     }
 }
 
@@ -23,6 +29,10 @@ function fussIfApplicable(tokens: Token[]): string | null {
         return fussReply(fussed);
     }
     return null;
+}
+
+function doNotSkip(): boolean {
+    return Math.random() >= 0.7;
 }
 
 function sendReply(bot: SlackBot, message: SlackMessage, reply: string | null) {
