@@ -56,10 +56,8 @@ function registerDirect(keywords: string[],
 }
 
 
-registerAmbient(["(.*)"],
-    (bot, message) => handleAmbientFuss(bot, message, naturalLanguageService));
+registerAmbient((bot, message) => handleAmbientFuss(bot, message, naturalLanguageService));
 
-function registerAmbient(keywords: string[],
-                         handler: (bot: SlackBot, message: SlackMessage) => void) {
-    controller.hears(keywords, "message_received", handler);
+function registerAmbient(handler: (bot: SlackBot, message: SlackMessage) => void) {
+    controller.on("ambient", handler);
 }

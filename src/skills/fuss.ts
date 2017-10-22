@@ -5,10 +5,8 @@ import { NaturalLanguageService } from "../natural-language-service";
 
 export function handleAmbientFuss(bot: SlackBot, message: SlackMessage, nlService: NaturalLanguageService) {
 
-    if (message.match) {
-        const toAnalyse = message.match[1];
-
-        nlService.analyse(toAnalyse)
+    if (message.text) {
+        nlService.analyse(message.text)
             .then(tokens => {
                 const reply = fussIfApplicable(tokens);
 
