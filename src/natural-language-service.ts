@@ -1,4 +1,5 @@
 import { exitIfAnyMissing } from "./utils";
+import * as eol from 'eol'
 
 export class PartOfSpeech {
     private nlPOS: any;
@@ -75,14 +76,18 @@ export class NaturalLanguageService {
 
     constructor(projectID: string, clientEmail: string, privateKey: string) {
         console.log("Retrieved PK as: " + privateKey);
-        const decoded = new Buffer(privateKey).toString('utf8');
-        console.log("Decoded PK: " + privateKey);
+
+        const decoded = Buffer.from(privateKey).toString('utf8');
+        console.log("Decoded PK: " + decoded);
+
+        const pk = eol.auto(privateKey);
+        console.log("Auto new lines PK: " + pk);
 
         const options = {
             credentials: {
                 projectId: projectID,
                 client_email: clientEmail,
-                private_key: decoded // privateKey
+                private_key: pk // privateKey
             }
         };
 

@@ -4,6 +4,7 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
+    "runnl": "tsc && node dist/debug.js",
     "start": "node dist/app.js",
     "build": "tsc",
     "postinstall": "npm run build"
@@ -15,6 +16,7 @@
     "@google-cloud/language": "^0.13.0",
     "botkit": "^0.6.4",
     "botkit-storage-redis": "^1.1.0",
+    "eol": "^0.9.1",
     "wordfilter": "^0.2.6"
   },
   "devDependencies": {
