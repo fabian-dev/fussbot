@@ -11,8 +11,12 @@ export function handleForFuss(bot: SlackBot, message: SlackMessage, nlService: N
         console.log("Will try to fuss sentence: " + toAnalyse);
 
         nlService.analyse(toAnalyse)
-            .then(tokens => fussIfApplicable(tokens))
-            .then(r => sendReply(bot, message, r));
+            .then(tokens => {
+                const reply = fussIfApplicable(tokens);
+                if (reply != null) {
+                    sendReply(bot, message, r)
+                }
+            });
     }
 }
 

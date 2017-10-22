@@ -10,7 +10,6 @@ describe("fussReply", () => {
         const actual = sut("Schadler");
 
         expect(actual).toContain("Schadler");
-
     });
 
 });
@@ -24,7 +23,14 @@ describe("fussOneOf", () => {
         const actual = sut([]);
 
         expect(actual).toBe(null);
+    });
 
+
+    it("returns a single fussed if more than one is fussable", () => {
+
+        const actual = sut([new Adjacent("scheiß", "Adler"), new Adjacent("schöner", "Adler")]);
+
+        expect(actual).toContain("adler");
     });
 
 });
@@ -38,7 +44,6 @@ describe("fuss", () => {
         const actual = sut(new Adjacent("scheiß", "Adler"));
 
         expect(actual).toBe("Schadler");
-
     });
 
 });

@@ -18,7 +18,9 @@ export function fussOneOf(adjacentes: Adjacent[]): string | null {
     const allFussed = fussAll(adjacentes);
 
     if (allFussed.length > 0) {
-        pickRandom<string>(allFussed)
+        console.log("Will pick a random fussed");
+
+        return pickRandom<string>(allFussed);
     }
 
     return null;
@@ -26,7 +28,11 @@ export function fussOneOf(adjacentes: Adjacent[]): string | null {
 
 export function fussAll(adjacentes: Adjacent[]): string[] {
 
-    return adjacentes.filter(a => canFuss(a)).map(a => fuss(a));
+    const allFussed = adjacentes.filter(a => canFuss(a)).map(a => fuss(a));
+
+    console.log("All fussed is: " + JSON.stringify(allFussed));
+
+    return allFussed;
 }
 
 export function canFuss(adjacent: Adjacent): boolean {
