@@ -2,11 +2,12 @@ import { SlackBot, SlackMessage } from "botkit";
 import { NaturalLanguageService } from "./natural-language-service";
 import { handleCallMe } from "./skills/callme";
 import { handleForgetMe } from "./skills/forgetme";
+import { handleForFuss } from "./skills/fuss";
 import { handleHello } from "./skills/hello";
+import { handlePOSDebug } from "./skills/pos-debug";
 import { handleUptime } from "./skills/uptime";
 import { handleWhatIsMyName } from "./skills/whatismyname";
 import { exitIfMissing } from "./utils";
-import { handleDumpSyntax } from "./skills/dump-syntax";
 
 const Botkit = require("botkit");
 const RedisStorage = require("botkit-storage-redis");
@@ -44,8 +45,10 @@ registerDirect(["uptime"], handleUptime);
 const naturalLanguageService = NaturalLanguageService.fromEnvVars();
 
 registerDirect(["nl (.*)", "pos (.*)"],
-    (bot, message) => handleDumpSyntax(bot, message, naturalLanguageService));
+    (bot, message) => handlePOSDebug(bot, message, naturalLanguageService));
 
+registerDirect(["fuss (.*)"],
+    (bot, message) => handleForFuss(bot, message, naturalLanguageService));
 
 
 function registerDirect(keywords: string[],
