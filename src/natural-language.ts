@@ -96,9 +96,6 @@ export function getAdjacentAdvAndNouns(tokens: Token[]): Adjacent[] {
         if (curr.pos.tag === "ADJ" && next.pos.tag === "NOUN") {
             adjacents.push(new Adjacent(curr.text, next.text));
         }
-        if (curr.pos.tag === "NOUN" && next.pos.tag === "ADJ") {
-            adjacents.push(new Adjacent(next.text, curr.text));
-        }
     });
     return adjacents;
 }

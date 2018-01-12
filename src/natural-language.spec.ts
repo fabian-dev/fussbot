@@ -21,18 +21,6 @@ describe("getAdjacentAdvAndNouns", () => {
         expectAdjacent(tokens, new Adjacent("scheiß", "Adler"));
     });
 
-    it("should collect nouns before adjectives", () => {
-
-        const tokens: Token[] = [
-            { pos: { tag: "NOUN" }, text: "Adler" },
-            { pos: { tag: "ADJ" }, text: "scheiß" },
-            { pos: { tag: "VERB" }, text: "egal" }
-
-        ] as Token[];
-
-        expectAdjacent(tokens, new Adjacent("scheiß", "Adler"));
-    });
-
 });
 
 describe("Adjacent", () => {
