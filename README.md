@@ -1,3 +1,9 @@
+# README
+
+This Slack bot annoys you in conversations. The bot mixes up words in your conversation by making use of the [Google Cloud Natural Language API](https://cloud.google.com/natural-language/docs/reference/rest/?authuser=0).
+
+This bot is build with the [botkit.ai Botkit](https://github.com/howdyai/botkit/).
+
 # Setup Guide
 
 ## Create Slack Bot
